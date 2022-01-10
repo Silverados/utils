@@ -20,4 +20,8 @@ public class JsonUtils {
         return JSON.parseArray(FileUtils.readFile(url));
     }
 
+    public static <T> T readFileAsClass(String url, Class<T> clazz) {
+        return JSON.parseObject(FileUtils.readFile(url), clazz);
+    }
+
 }
