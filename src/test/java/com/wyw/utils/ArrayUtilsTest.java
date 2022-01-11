@@ -2,6 +2,9 @@ package com.wyw.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayUtilsTest {
@@ -70,5 +73,15 @@ class ArrayUtilsTest {
     @Test
     void max() {
         assertEquals(ArrayUtils.max(new int[]{1, 2, 3, 4, 5, 6, 6, 4}), 6);
+    }
+
+    @Test
+    void toArray() {
+        assertTrue(ArrayUtils.isEquals(ArrayUtils.toArray(List.of(1, 2, 3, 4, 5)), new int[]{1, 2, 3, 4, 5}));
+    }
+
+    @Test
+    void testToArray() {
+        assertTrue(ArrayUtils.isEquals(ArrayUtils.toArray(ArrayUtils.toArray(1, 2, 3, 4, 5)), new int[]{1, 2, 3, 4, 5}));
     }
 }
