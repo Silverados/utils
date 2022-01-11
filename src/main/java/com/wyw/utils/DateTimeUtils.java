@@ -46,6 +46,10 @@ public class DateTimeUtils {
         return LocalDateTime.ofEpochSecond(milliTimestamp / 1000, 0, ZONE_OFFSET);
     }
 
+    public static LocalDate toLocalDate(long milliTimestamp) {
+        return toLocalDateTime(milliTimestamp).toLocalDate();
+    }
+
     /**
      * careful : 2147483647 (Integer.MAX_VALUE) -> 2038-01-19T11:14:07
      * @param timestamp unix timestamp
@@ -93,5 +97,18 @@ public class DateTimeUtils {
 
     public static String toFormatString(long milliTimestamp) {
         return toLocalDateTime(milliTimestamp).format(DATE_TIME_FORMATTER);
+    }
+
+    /**
+     * @param milliTimestamp1 - millisecond timestamp
+     * @param milliTimestamp2 - millisecond timestamp
+     * @return true if two timestamp is same day
+     */
+    public static boolean isSameDay(final long milliTimestamp1, final long milliTimestamp2) {
+        return toLocalDate(milliTimestamp1).isEqual(toLocalDate(milliTimestamp2));
+    }
+
+    public static boolean isSameDay(final LocalDateTime dateTime1, final LocalDateTime dateTime2) {
+        return dateTime1.toLocalDate().isEqual(dateTime2.toLocalDate());
     }
 }

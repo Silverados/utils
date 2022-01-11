@@ -61,4 +61,15 @@ class DateTimeUtilsTest {
     void toFormatString() {
         assertEquals(DateTimeUtils.toFormatString(1643771543000L), "2022-02-02 11:12:23");
     }
+
+    @Test
+    void isSameDay() {
+        assertTrue(DateTimeUtils.isSameDay(1643771543000L, 1643771583000L));
+    }
+
+    @Test
+    void testIsSameDay() {
+        assertTrue(DateTimeUtils.isSameDay(LocalDateTime.of(2022, 2, 1, 11, 11, 11, 102342),
+                LocalDateTime.of(2022, 2, 1, 11, 11, 11, 2342332)));
+    }
 }
