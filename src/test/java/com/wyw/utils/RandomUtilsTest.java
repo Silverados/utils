@@ -38,6 +38,9 @@ class RandomUtilsTest {
 
         num = RandomUtils.nextInt(100, 10);
         assertTrue(num >= 10 && num < 100);
+
+        num = RandomUtils.nextInt(-100, 0);
+        assertTrue(num >= -100 && num < 0);
     }
 
     @Test

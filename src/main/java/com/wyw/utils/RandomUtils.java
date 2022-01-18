@@ -48,18 +48,22 @@ public class RandomUtils {
      * @return a random value in [origin, bound) or [bound, origin)
      */
     public static int nextInt(int origin, int bound) {
-        if (origin < 0 || bound < 0) {
-            throw new IllegalArgumentException(BAD_BOUND);
-        }
         if (origin == bound) {
             return origin;
         }
         if (origin < bound) {
+            if (bound - origin < 0) {
+                throw new IllegalArgumentException(BAD_BOUND);
+            }
             return nextInt(bound - origin) + origin;
         } else {
+            if (origin - bound < 0) {
+                throw new IllegalArgumentException(BAD_BOUND);
+            }
             return  nextInt(origin - bound) + bound;
         }
     }
+
 
     /**
      * @param weights - each key map to a weight, such as: {1:2, 2:3, 3:5}
