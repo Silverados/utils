@@ -52,14 +52,8 @@ public class RandomUtils {
             return origin;
         }
         if (origin < bound) {
-            if (bound - origin < 0) {
-                throw new IllegalArgumentException(BAD_BOUND);
-            }
             return nextInt(bound - origin) + origin;
         } else {
-            if (origin - bound < 0) {
-                throw new IllegalArgumentException(BAD_BOUND);
-            }
             return  nextInt(origin - bound) + bound;
         }
     }
