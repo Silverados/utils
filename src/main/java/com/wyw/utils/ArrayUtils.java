@@ -126,7 +126,7 @@ public class ArrayUtils {
     public static void swap(final int[] arr, final int a, final int b) {
         int value = arr[a];
         arr[a] = arr[b];
-        arr[a] = value;
+        arr[b] = value;
     }
 
 
@@ -225,6 +225,39 @@ public class ArrayUtils {
             if (a[i] != b[i]) {
                 return false;
             }
+        }
+        return true;
+    }
+
+
+    /**
+     * 给定一个数组，验证其所有元素是否是从 1~数组大小，例如：
+     * [1, 2, 3, 4, 5] -> true
+     * [1, 3, 2, 5, 4] -> true
+     * [1, 2, 4, 4, 5] -> false
+     * [1, 2, 8, 4, 3] -> false
+     * @param arr
+     * @return
+     */
+    public static boolean containsAllDigits(int[] arr) {
+        if (isEmpty(arr)) {
+            return true;
+        }
+
+        int len = getLength(arr);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] <= 0 || arr[i] > len) {
+                return false;
+            }
+
+            while (i != arr[i] - 1) {
+                // it means duplicate.
+                if (arr[i] > len || arr[arr[i] - 1] == arr[i]) {
+                    return false;
+                }
+                swap(arr, i, arr[i] - 1);
+            }
+            swap(arr, i, arr[i] - 1);
         }
         return true;
     }

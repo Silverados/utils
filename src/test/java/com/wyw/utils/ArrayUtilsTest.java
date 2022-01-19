@@ -59,6 +59,9 @@ class ArrayUtilsTest {
 
     @Test
     void swap() {
+        int[] arr = new int[]{1, 2, 3, 5, 4};
+        ArrayUtils.swap(arr, 3, 4);
+        assertTrue(ArrayUtils.isEquals(new int[]{1, 2, 3, 4, 5}, arr));
     }
 
     @Test
@@ -84,4 +87,16 @@ class ArrayUtilsTest {
     void testToArray() {
         assertTrue(ArrayUtils.isEquals(ArrayUtils.toArray(ArrayUtils.toArray(1, 2, 3, 4, 5)), new int[]{1, 2, 3, 4, 5}));
     }
+
+    @Test
+    void containsAllDigits() {
+//        int[] arr = new int[] {1, 2, 3, 4, 5};
+        int[] arr = new int[] {1, 2, 2, 4, 5};
+        for (int i = 0; i < 10000; i++) {
+            ArrayUtils.shuffle(arr);
+//            assertTrue(ArrayUtils.containsAllDigits(arr));
+            assertFalse(ArrayUtils.containsAllDigits(arr));
+        }
+    }
+
 }
