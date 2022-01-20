@@ -212,6 +212,13 @@ public class ArrayUtils {
         return getLength(a) == getLength(b);
     }
 
+    /**
+     * [1, 2, 3], [1, 2, 3] ---> true
+     * [1, 2, 3], [1, 3, 2] ---> false
+     * @param a
+     * @param b
+     * @return
+     */
     // isEquals
     //-----------------------------------------------------------------------
     public static boolean isEquals(int[] a, int[] b) {
@@ -219,8 +226,6 @@ public class ArrayUtils {
             return false;
         }
 
-        Arrays.sort(a);
-        Arrays.sort(b);
         for (int i = 0; i < a.length; i++) {
             if (a[i] != b[i]) {
                 return false;
