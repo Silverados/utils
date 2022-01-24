@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 public class MathUtils {
 
     public static final String INVALID_PARAM = "Param must be positive!";
+    public static final String INVALID_ARRAY = "Array is empty!";
 
     /**
      * 3/3 --> 1
@@ -85,5 +86,56 @@ public class MathUtils {
         }
 
         return a % b == 0 ? b : gcd(b, a % b);
+    }
+
+    // avg
+    // ----------------------------------------------------------------------
+    public static double avg(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        return sum(arr) / arr.length;
+    }
+
+    // avg
+    // ----------------------------------------------------------------------
+    public static double sum(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+
+        double sum = 0;
+        for (int num : arr) {
+            sum += num;
+        }
+        return sum;
+    }
+
+    // max
+    // ----------------------------------------------------------------------
+    public static int max(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            throw new IllegalArgumentException("");
+        }
+
+        int max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            max = Math.max(max, arr[i]);
+        }
+        return max;
+    }
+
+    // min
+    // ----------------------------------------------------------------------
+    public static int min(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            throw new IllegalArgumentException("");
+        }
+
+        int min = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            min = Math.min(min, arr[i]);
+        }
+        return min;
     }
 }
