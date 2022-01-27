@@ -1,9 +1,7 @@
 package com.wyw.utils;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * like org.commons.lang3.ArrayUtils
@@ -200,6 +198,30 @@ public class ArrayUtils {
             res[i] = arr[i];
         }
         return res;
+    }
+
+    // toList
+    //-----------------------------------------------------------------------
+    public static List<Integer> toList(int[] arr) {
+        List<Integer> list = new ArrayList<>();
+        if (isEmpty(arr)) {
+            return list;
+        }
+
+        for (int num : arr) {
+            list.add(num);
+        }
+        return list;
+    }
+
+    public static <T> List<T> toList(T[] arr) {
+        List<T> list = new ArrayList<>();
+        if (isEmpty(arr)) {
+            return list;
+        }
+
+        Collections.addAll(list, arr);
+        return list;
     }
 
     // isSameLength
