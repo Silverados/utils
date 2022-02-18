@@ -32,6 +32,22 @@ public class RandomUtils {
         return RandomNumberGeneratorHolder.randomNumberGenerator.nextInt();
     }
 
+    public static int[] nextIntArray(int arrayLength, int bound) {
+        int[] res = new int[arrayLength];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = nextInt(bound);
+        }
+        return res;
+    }
+
+    public static int[] nextIntArray(int arrayLength, int origin, int bound) {
+        int[] res = new int[arrayLength];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = nextInt(origin, bound);
+        }
+        return res;
+    }
+
     /**
      * @param bound - the upper bound(exclusive), must be >= 0.
      * @return a random int value in [0, bound)

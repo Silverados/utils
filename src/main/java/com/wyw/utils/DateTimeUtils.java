@@ -1,9 +1,12 @@
 package com.wyw.utils;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.WeekFields;
 
 /**
  * Timestamp -> second timestamp
@@ -13,10 +16,32 @@ import java.time.format.DateTimeFormatter;
 public class DateTimeUtils {
     public static final String INVALID_CONSTRUCT = "This is a utility class and cannot be instantiated";
 
+    /**
+     * 每秒有1000毫秒
+     */
+    public static final int MILLISECOND_PER_SECOND = 1000;
+    /**
+     * 每分钟有60秒
+     */
+    public static final int SECOND_PER_MINUTE = 60;
+    /**
+     * 每小时有60分钟
+     */
+    public static final int MINUTE_PER_HOUR = 60;
+    /**
+     * 每天有24小时
+     */
+    public static final int HOUR_PER_DAY = 24;
+
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_DATE;
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ISO_TIME;
     public static final ZoneOffset ZONE_OFFSET = ZoneOffset.of("+8");
+    /**
+     * 该标准意味着：周一是每周的第一天，第一周必须是4天及以上
+     */
+    public static final WeekFields ISO_WEEK_FIELDS = WeekFields.ISO;
+
     private DateTimeUtils() {
         throw new UnsupportedOperationException(INVALID_CONSTRUCT);
     }
@@ -110,5 +135,23 @@ public class DateTimeUtils {
 
     public static boolean isSameDay(final LocalDateTime dateTime1, final LocalDateTime dateTime2) {
         return dateTime1.toLocalDate().isEqual(dateTime2.toLocalDate());
+    }
+
+    /**
+     * 判断两个日期是否是同周，周数采用的是ISO标准。可能是不同的年份。
+     * @param dateTime1
+     * @param dateTime2
+     * @return
+     */
+    public static boolean isSameWeek(final LocalDateTime dateTime1, final LocalDateTime dateTime2) {
+        return weekOfYear(dateTime1) == weekOfYear(dateTime2);
+    }
+
+    public static int weekOfYear(LocalDateTime localDateTime) {
+        return localDateTime.get(ISO_WEEK_FIELDS.weekOfWeekBasedYear());
+    }
+
+    public static boolean isSameMonth(final LocalDateTime dateTime1, final LocalDateTime dateTime2) {
+        return dateTime1.getYear() == dateTime2.getYear() && dateTime1.getMonth() == dateTime2.getMonth();
     }
 }

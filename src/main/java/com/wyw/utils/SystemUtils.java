@@ -1,5 +1,7 @@
 package com.wyw.utils;
 
+import java.lang.management.ManagementFactory;
+
 public class SystemUtils {
     public static final String INVALID_CONSTRUCT = "This is a utility class and cannot be instantiated";
 
@@ -32,6 +34,10 @@ public class SystemUtils {
             return false;
         }
         return OS_NAME.toUpperCase().startsWith(prefix);
+    }
+
+    public static String getPidStr() {
+        return ManagementFactory.getRuntimeMXBean().getName().split("@", 2)[0];
     }
 
 }

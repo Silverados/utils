@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * like org.commons.lang3.ArrayUtils
+ * See: org.commons.lang3.ArrayUtils
  */
 public class ArrayUtils {
     public static final String INVALID_CONSTRUCT = "This is a utility class and cannot be instantiated";

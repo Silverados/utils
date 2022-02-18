@@ -72,4 +72,19 @@ class DateTimeUtilsTest {
         assertTrue(DateTimeUtils.isSameDay(LocalDateTime.of(2022, 2, 1, 11, 11, 11, 102342),
                 LocalDateTime.of(2022, 2, 1, 11, 11, 11, 2342332)));
     }
+
+    @Test
+    void weekOfYear() {
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 1, 0, 0, 0)), 52);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 2, 0, 0, 0)), 52);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 3, 0, 0, 0)), 1);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 4, 0, 0, 0)), 1);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 5, 0, 0, 0)), 1);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 6, 0, 0, 0)), 1);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 7, 0, 0, 0)), 1);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 8, 0, 0, 0)), 1);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 9, 0, 0, 0)), 1);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 10, 0, 0, 0)), 2);
+        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 11, 0, 0, 0)), 2);
+    }
 }

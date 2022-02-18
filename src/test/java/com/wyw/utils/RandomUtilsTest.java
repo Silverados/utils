@@ -53,4 +53,10 @@ class RandomUtilsTest {
         }
         System.out.println(Arrays.toString(arr));
     }
+
+    @Test
+    void nextIntArray() {
+//        System.out.println(Arrays.toString(RandomUtils.nextIntArray(100, 100)));
+        System.out.println(Arrays.toString(RandomUtils.nextIntArray(20, -10, 1)));
+    }
 }
