@@ -127,4 +127,16 @@ public class StringUtils {
             return num;
         }
     }
+
+    /**
+     * revert a string
+     * @param str
+     * @return
+     */
+    public static String revert(String str) {
+        return new StringBuilder(str).reverse().toString();
+    }
+
+
+
 }

@@ -2,6 +2,7 @@ package com.wyw.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -86,5 +87,10 @@ class DateTimeUtilsTest {
         assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 9, 0, 0, 0)), 1);
         assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 10, 0, 0, 0)), 2);
         assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 11, 0, 0, 0)), 2);
+    }
+
+    @Test
+    void durationDays() {
+        assertEquals(DateTimeUtils.durationDays(LocalDate.of(2022, 2, 15), LocalDate.of(2022, 2, 10)), -5);
     }
 }

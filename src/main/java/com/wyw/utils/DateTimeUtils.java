@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
 
 /**
@@ -153,5 +154,13 @@ public class DateTimeUtils {
 
     public static boolean isSameMonth(final LocalDateTime dateTime1, final LocalDateTime dateTime2) {
         return dateTime1.getYear() == dateTime2.getYear() && dateTime1.getMonth() == dateTime2.getMonth();
+    }
+
+    public static long durationDays(final LocalDate dateTime1) {
+        return dateTime1.until(LocalDate.now(), ChronoUnit.DAYS);
+    }
+
+    public static long durationDays(final LocalDate dateTime1, final LocalDate dateTime2) {
+        return dateTime1.until(dateTime2, ChronoUnit.DAYS);
     }
 }
