@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 /**
  * Timestamp -> second timestamp
@@ -162,5 +164,25 @@ public class DateTimeUtils {
 
     public static long durationDays(final LocalDate dateTime1, final LocalDate dateTime2) {
         return dateTime1.until(dateTime2, ChronoUnit.DAYS);
+    }
+
+    public static String weekDisplayName(LocalDate localDate) {
+        return localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.CHINESE);
+    }
+
+    public static long durationMonth(final LocalDate dateTime1) {
+        return dateTime1.until(LocalDate.now(), ChronoUnit.MONTHS);
+    }
+
+    public static long durationMonth(final LocalDate dateTime1, final LocalDate dateTime2) {
+        return dateTime1.until(dateTime2, ChronoUnit.MONTHS);
+    }
+
+    public static long durationYear(final LocalDate dateTime1) {
+        return dateTime1.until(LocalDate.now(), ChronoUnit.YEARS);
+    }
+
+    public static long durationYear(final LocalDate dateTime1, final LocalDate dateTime2) {
+        return dateTime1.until(dateTime2, ChronoUnit.YEARS);
     }
 }

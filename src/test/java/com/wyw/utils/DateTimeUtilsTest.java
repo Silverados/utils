@@ -93,4 +93,9 @@ class DateTimeUtilsTest {
     void durationDays() {
         assertEquals(DateTimeUtils.durationDays(LocalDate.of(2022, 2, 15), LocalDate.of(2022, 2, 10)), -5);
     }
+
+    @Test
+    void week() {
+        System.out.println(DateTimeUtils.weekDisplayName(LocalDate.now()));
+    }
 }
