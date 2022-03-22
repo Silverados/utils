@@ -1,5 +1,7 @@
 package com.wyw.game_utils;
 
+import lombok.Data;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,5 +63,11 @@ public class LevelUpUtils {
 
     public static void log(String str) {
         System.out.println(str);
+    }
+
+    @Data
+    public static class Player {
+        private int level = 1;
+        private int exp;
     }
 }

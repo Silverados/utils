@@ -1,12 +1,10 @@
 package com.wyw.utils;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
@@ -184,5 +182,13 @@ public class DateTimeUtils {
 
     public static long durationYear(final LocalDate dateTime1, final LocalDate dateTime2) {
         return dateTime1.until(dateTime2, ChronoUnit.YEARS);
+    }
+
+    public static boolean isToday(LocalDateTime dateTime) {
+        return isSameDay(dateTime, LocalDateTime.now());
+    }
+
+    public static boolean notToday(LocalDateTime dateTime) {
+        return !isToday(dateTime);
     }
 }
