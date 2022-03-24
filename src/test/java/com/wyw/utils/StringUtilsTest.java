@@ -32,6 +32,7 @@ class StringUtilsTest {
     @Test
     void testConcat() {
         LinkedList<Integer> linkedList = new LinkedList<>();
+        System.out.println(StringUtils.concat(",", linkedList));
         linkedList.add(1);
         linkedList.add(2);
         System.out.println(StringUtils.concat(",", linkedList));

@@ -156,7 +156,9 @@ public class StringUtils {
             sb.append(iterator.next());
             sb.append(sign);
         }
-        sb.delete(sb.length() - sign.length(), sb.length());
+        if (sb.length() >= sign.length()) {
+            sb.delete(sb.length() - sign.length(), sb.length());
+        }
         return sb.toString();
     }
 }
