@@ -99,4 +99,10 @@ class ArrayUtilsTest {
         }
     }
 
+    @Test
+    void testConcat() {
+        String[] arr = new String[] {"a", "b", "c"};
+        assertEquals(ArrayUtils.concat(arr, "_"), "a_b_c");
+    }
+
 }

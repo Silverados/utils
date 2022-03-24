@@ -2,6 +2,8 @@ package com.wyw.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringUtilsTest {
@@ -25,5 +27,13 @@ class StringUtilsTest {
         for (StringUtils.Color color : StringUtils.Color.values()) {
             System.out.println(StringUtils.formatWithColor("hello world!", color));
         }
+    }
+
+    @Test
+    void testConcat() {
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        linkedList.add(1);
+        linkedList.add(2);
+        System.out.println(StringUtils.concat(",", linkedList));
     }
 }

@@ -2,6 +2,7 @@ package com.wyw.utils;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.Iterator;
 
 public class StringUtils {
     public static final String INVALID_CONSTRUCT = "This is a utility class and cannot be instantiated";
@@ -138,5 +139,24 @@ public class StringUtils {
     }
 
 
-
+    public static String concat(String sign, Object... objects) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < objects.length; i++) {
+            sb.append(objects[i]);
+            if (i != objects.length - 1) {
+                sb.append(sign);
+            }
+        }
+        return sb.toString();
+    }
+    public static <E> String concat(String sign, Iterable<E> iterable) {
+        Iterator<E> iterator = iterable.iterator();
+        StringBuilder sb = new StringBuilder();
+        while (iterator.hasNext()) {
+            sb.append(iterator.next());
+            sb.append(sign);
+        }
+        sb.delete(sb.length() - sign.length(), sb.length());
+        return sb.toString();
+    }
 }
