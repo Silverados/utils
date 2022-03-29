@@ -1,5 +1,6 @@
 package com.wyw.utils;
 
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -105,4 +106,11 @@ class ArrayUtilsTest {
         assertEquals(ArrayUtils.concat(arr, "_"), "a_b_c");
     }
 
+    @Test
+    void test() {
+        String[] arr = {"10", "10,10,123"};
+        for (String s : arr) {
+            System.out.println(Arrays.toString(s.split(",")));
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.wyw.utils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -99,5 +100,20 @@ public class RandomUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * 等概率返回一个元素
+     *
+     * @param list
+     * @return
+     */
+    public static Integer randomSameWeight(List<Integer> list) {
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        int size = list.size();
+        return list.get(nextInt(size));
     }
 }
