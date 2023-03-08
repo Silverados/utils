@@ -79,4 +79,10 @@ public class FileUtils {
         }
         return "";
     }
+
+    public static String getFileExtension(String url) {
+        var index = url.lastIndexOf('.');
+        assert 0 <= index;
+        return url.substring(index);
+    }
 }

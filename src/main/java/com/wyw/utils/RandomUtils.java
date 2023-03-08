@@ -1,8 +1,6 @@
 package com.wyw.utils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class RandomUtils {
     public static final String INVALID_CONSTRUCT = "This is a utility class and cannot be instantiated";
@@ -12,14 +10,9 @@ public class RandomUtils {
         throw new UnsupportedOperationException(INVALID_CONSTRUCT);
     }
 
-    // lazy-load
-    private static final class RandomNumberGeneratorHolder {
-        static final Random randomNumberGenerator = new Random();
-    }
-
-
     /**
      * like Math.random()
+     *
      * @return a random double value
      */
     public static double nextDouble() {
@@ -71,14 +64,13 @@ public class RandomUtils {
         if (origin < bound) {
             return nextInt(bound - origin) + origin;
         } else {
-            return  nextInt(origin - bound) + bound;
+            return nextInt(origin - bound) + bound;
         }
     }
 
-
     /**
      * @param weights - each key map to a weight, such as: {1:2, 2:3, 3:5}
-     * @param <T> - generic class
+     * @param <T>     - generic class
      * @return a random key by weight
      */
     public static <T> T randomByWeight(Map<T, Integer> weights) {
@@ -108,12 +100,63 @@ public class RandomUtils {
      * @param list
      * @return
      */
-    public static Integer randomSameWeight(List<Integer> list) {
+    public static <T> T randomSameWeight(List<T> list) {
         if (list.isEmpty()) {
             return null;
         }
 
         int size = list.size();
         return list.get(nextInt(size));
+    }
+
+    /**
+     * 等概率返回若个元素
+     * 会对原list发生修改
+     * @param list
+     * @param count 数量
+     * @return
+     */
+    public static <T> List<T> randomSameWeight2(List<T> list, int count) {
+        if (list.isEmpty()) {
+            return new ArrayList<>(0);
+        }
+
+        if (count >= list.size()) {
+            return new ArrayList<>(list);
+        }
+
+        Collections.shuffle(list);
+        return list.subList(0, count);
+    }
+
+    /**
+     * 等概率返回若个元素
+     * 可以确保不会对原list发生修改
+     * @param list
+     * @param count 数量
+     * @return
+     */
+    public static <T> List<T> randomSameWeight(List<T> list, int count) {
+        if (list.isEmpty()) {
+            return new ArrayList<>(0);
+        }
+
+        if (count >= list.size()) {
+            return new ArrayList<>(list);
+        }
+
+        var temp = new ArrayList<>(list);
+        Collections.shuffle(temp);
+        var res = new ArrayList<T>(count);
+        for (int i = 0; i < count; i++) {
+            res.add(temp.get(i));
+        }
+
+        return res;
+    }
+
+    // lazy-load
+    private static final class RandomNumberGeneratorHolder {
+        static final Random randomNumberGenerator = new Random();
     }
 }
