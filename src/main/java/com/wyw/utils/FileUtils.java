@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -17,7 +18,11 @@ public class FileUtils {
     }
 
     public static String readFile(String url) {
-        return readFileWithNIO2(url);
+        return readFileWithNIO(url);
+    }
+
+    public static String readFile(Path path) {
+        return readFileWithNIO(path);
     }
 
     public static String readFileWithBufferedReader(String url) {
@@ -36,19 +41,26 @@ public class FileUtils {
         }
         return "";
     }
-
-    public static String readFileWithNIO(String url) {
+    public static String readFileWithNIO(Path path) {
         try {
-            return String.join("\n", Files.readAllLines(Paths.get(url)));
+            return Files.readString(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "";
     }
 
+    public static String readFileWithNIO(String url) {
+        return readFileWithNIO(Paths.get(url));
+    }
+
     public static String readFileWithNIO2(String url) {
+        return readFileWithNIO2(Paths.get(url));
+    }
+
+    public static String readFileWithNIO2(Path path) {
         try {
-            return new String(Files.readAllBytes(Paths.get(url)));
+            return new String(Files.readAllBytes(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
