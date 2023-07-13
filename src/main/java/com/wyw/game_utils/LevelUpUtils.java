@@ -48,7 +48,7 @@ public class LevelUpUtils {
                     player.setExp(0);
                 }
             } else {
-                player.setExp(exp);
+                player.setExp(player.getExp() + exp);
             }
             exp -= cost;
         }
