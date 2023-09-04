@@ -3,19 +3,24 @@ package com.wyw.game_utils.state_mechine;
 public class StateMachine<T> {
 
     public BaseFSMState<T> currentState;
+    public T t;
+
+    public StateMachine(T t) {
+        this.t = t;
+    }
 
     public void tick() {
         for (FSMTransition<T> transition : currentState.transitionList) {
-            if (transition.isValid()) {
-                transition.onTransition();
-                currentState.onExit();
+            if (transition.isValid(t)) {
+                transition.onTransition(t);
+                currentState.onExit(t);
                 BaseFSMState<T> nextState = transition.nextState();
-                nextState.onEnter();
+                nextState.onEnter(t);
                 currentState = nextState;
                 break;
             }
         }
 
-        currentState.onUpdate();
+        currentState.onUpdate(t);
     }
 }

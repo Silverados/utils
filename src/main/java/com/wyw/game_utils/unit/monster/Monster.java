@@ -5,6 +5,6 @@ import com.wyw.game_utils.unit.FightUnit;
 
 public class Monster extends FightUnit {
     public Monster() {
-        stateMachine = new StateMachine<Monster>();
+        stateMachine = new StateMachine<Monster>(this);
     }
 }

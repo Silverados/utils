@@ -11,4 +11,19 @@ public abstract class BaseFSMState<T> implements FSMState<T>{
         transitionList = new ArrayList<>();
     }
 
+    @Override
+    public void onEnter(T t) {
+
+    }
+
+    @Override
+    public void onUpdate(T t) {
+
+    }
+
+    @Override
+    public void onExit(T t) {
+
+    }
+
 }
