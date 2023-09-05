@@ -10,4 +10,15 @@ public class DeadState extends MonsterState{
     public DeadState(MonsterStateEnum stateEnum) {
         super(MonsterStateEnum.DeadState);
     }
+
+    @Override
+    public void initTransitions() {
+        super.initTransitions();
+
+        addTransitions((monster) -> {
+            return true;
+        }, (monster) -> {
+            // doSomething
+        }, MonsterStateEnum.IdleState);
+    }
 }

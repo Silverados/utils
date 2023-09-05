@@ -9,7 +9,7 @@ public class StateMachine<T> {
         this.t = t;
     }
 
-    public void tick() {
+    public void update() {
         for (FSMTransition<T> transition : currentState.transitionList) {
             if (transition.isValid(t)) {
                 transition.onTransition(t);
