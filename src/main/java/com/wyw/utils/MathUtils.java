@@ -8,20 +8,22 @@ public class MathUtils {
     public static final String INVALID_PARAM = "Param must be positive!";
     public static final String INVALID_ARRAY = "Array is empty!";
 
-    /**
-     * 3/3 --> 1
-     * 4/3 --> 2
-     * 6/3 --> 2
-     * 7/3 --> 3
-     * @param x
-     * @param y
-     * @return
-     */
-    public static int cellDiv(int x, int y) {
-        if (x < 0 || y <= 0) {
-            throw new IllegalArgumentException(INVALID_PARAM);
+    public static int ceilDiv(int x, int y) {
+        final int q = x / y;
+        // if the signs are the same and modulo not zero, round up
+        if ((x ^ y) >= 0 && (q * y != x)) {
+            return q + 1;
         }
-        return x % y == 0 ? x / y : x / y + 1;
+        return q;
+    }
+
+    public static int floorDiv(int x, int y) {
+        final int q = x / y;
+        // if the signs are different and modulo not zero, round down
+        if ((x ^ y) < 0 && (q * y != x)) {
+            return q - 1;
+        }
+        return q;
     }
 
     // abs
