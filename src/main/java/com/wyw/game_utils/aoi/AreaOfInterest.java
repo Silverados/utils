@@ -1,25 +1,49 @@
 package com.wyw.game_utils.aoi;
 
+import com.wyw.game_utils.unit.BaseUnit;
 import com.wyw.utils.MathUtils;
+import lombok.Getter;
 
 public class AreaOfInterest {
-    public final int width;
-    public final int height;
-    public final int gridRange;
+    @Getter
+    private final int width;
+    @Getter
+    private final int height;
+    @Getter
+    private final int towerRange;
 
-    public final int xGridSize;
-    public final int yGridSize;
+    public final int xTowerSize;
+    public final int yTowerSizer;
 
-    public final Grid[][] grids;
+    public final Tower[][] towers;
 
-
-    public AreaOfInterest(int width, int height, int gridRange) {
+    public AreaOfInterest(int width, int height, int towerRange) {
         this.width = width;
         this.height = height;
-        this.gridRange = gridRange;
+        this.towerRange = towerRange;
 
-        xGridSize = MathUtils.ceilDiv(width, gridRange);
-        yGridSize = MathUtils.ceilDiv(height, gridRange);
-        grids = new Grid[xGridSize][yGridSize];
+        xTowerSize = MathUtils.ceilDiv(width, towerRange);
+        yTowerSizer = MathUtils.ceilDiv(height, towerRange);
+        towers = new Tower[xTowerSize][yTowerSizer];
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                towers[i][j] = new Tower(i, j, width, height, towerRange);
+            }
+        }
     }
+
+    public Tower getTower(int x, int y) {
+        return towers[MathUtils.ceilDiv(x, towerRange)][MathUtils.ceilDiv(y, towerRange)];
+    }
+
+    public Tower getTower(Vector2 pos) {
+        return getTower((int)pos.x, (int)pos.y);
+    }
+
+    public void onEnter(BaseUnit unit) {}
+
+    public void move(BaseUnit unit) {}
+
+    public void onExit(BaseUnit unit) {}
 }
