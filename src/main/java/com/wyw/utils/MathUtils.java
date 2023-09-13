@@ -16,6 +16,9 @@ public class MathUtils {
         }
         return q;
     }
+    public static int floorDiv(float x, int y) {
+        return Math.floorDiv((int)x, y);
+    }
 
     public static int floorDiv(int x, int y) {
         final int q = x / y;

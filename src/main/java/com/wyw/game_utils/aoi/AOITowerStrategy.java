@@ -4,6 +4,9 @@ import com.wyw.game_utils.unit.BaseUnit;
 import com.wyw.utils.MathUtils;
 import lombok.Getter;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 /**
  * <a href="https://iyichen.xyz/2020/04/talk-about-aoi/">...</a>
  * 以玩家移动，进入，离开为例：
@@ -24,7 +27,7 @@ public class AOITowerStrategy implements AOIStrategy<BaseUnit> {
     private final int towerRange;
 
     public final int xTowerSize;
-    public final int yTowerSizer;
+    public final int yTowerSize;
 
     public final Tower[][] towers;
 
@@ -34,8 +37,8 @@ public class AOITowerStrategy implements AOIStrategy<BaseUnit> {
         this.towerRange = towerRange;
 
         xTowerSize = MathUtils.ceilDiv(width, towerRange);
-        yTowerSizer = MathUtils.ceilDiv(height, towerRange);
-        towers = new Tower[xTowerSize][yTowerSizer];
+        yTowerSize = MathUtils.ceilDiv(height, towerRange);
+        towers = new Tower[xTowerSize][yTowerSize];
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -44,17 +47,35 @@ public class AOITowerStrategy implements AOIStrategy<BaseUnit> {
         }
     }
 
-    public Tower getTower(int x, int y) {
-        return towers[MathUtils.ceilDiv(x, towerRange)][MathUtils.ceilDiv(y, towerRange)];
+    public Tower getTower(float x, float y) {
+        return towers[MathUtils.floorDiv(x, towerRange)][MathUtils.floorDiv(y, towerRange)];
     }
 
     public Tower getTower(Vector2 pos) {
-        return getTower((int)pos.x, (int)pos.y);
+        return getTower(pos.x, pos.y);
+    }
+
+    public void towersWork(BaseUnit unit, Vector2 curPos, Consumer<Tower> task) {
+        float halfWidth = unit.viewWidth / 2;
+        float halfHeight = unit.viewHeight / 2;
+        var left = Math.max(curPos.x - halfWidth, 0);
+        var right = Math.min(curPos.x + halfHeight, width);
+        var top = Math.min(curPos.y + halfHeight, height);
+        var bottom = Math.max(curPos.y - halfWidth, 0);
+
+        for (var x = left; x <= right; ) {
+            for (var y = bottom; y <= top; ) {
+                Tower tower = getTower(x, y);
+                task.accept(tower);
+                y += top - y < towerRange ? top - y : towerRange;
+            }
+            x += right - x < towerRange ? right - x : towerRange;
+        }
     }
 
     @Override
     public void enter(BaseUnit unit, Vector2 pos) {
-        Tower tower = getTower(pos);
+        towersWork(unit, pos, Tower::notifyWatchers);
     }
 
     @Override
