@@ -56,20 +56,40 @@ public class AOITowerStrategy implements AOIStrategy<BaseUnit> {
     }
 
     public void towersWork(BaseUnit unit, Vector2 curPos, Consumer<Tower> task) {
+        Edges edges = getEdges(unit, curPos);
+        Tower leftBottom = getTower(new Vector2(edges.left, edges.bottom));
+        Tower rightTop = getTower(new Vector2(edges.right, edges.top));
+
+        // 这里是用位置求tower 减少除法
+        for (var xNo = leftBottom.getXNo(); xNo <= rightTop.getXNo(); xNo++) {
+            for (var yNo = leftBottom.getYNo(); yNo <= rightTop.getYNo(); yNo++) {
+                Tower tower = towers[xNo][yNo];
+                task.accept(tower);
+            }
+        }
+    }
+
+    private Edges getEdges(BaseUnit unit, Vector2 curPos) {
         float halfWidth = unit.viewWidth / 2;
         float halfHeight = unit.viewHeight / 2;
         var left = Math.max(curPos.x - halfWidth, 0);
         var right = Math.min(curPos.x + halfHeight, width);
         var top = Math.min(curPos.y + halfHeight, height);
         var bottom = Math.max(curPos.y - halfWidth, 0);
+        return new Edges(left, right, top, bottom);
+    }
 
-        for (var x = left; x <= right; ) {
-            for (var y = bottom; y <= top; ) {
+    public void towersWorkBak(BaseUnit unit, Vector2 curPos, Consumer<Tower> task) {
+        Edges edges = getEdges(unit, curPos);
+
+        // 这里是用位置求tower
+        for (var x = edges.left; x <= edges.right; ) {
+            for (var y = edges.bottom; y <= edges.top; ) {
                 Tower tower = getTower(x, y);
                 task.accept(tower);
-                y += top - y < towerRange ? top - y : towerRange;
+                y += edges.top - y < towerRange ? edges.top - y : towerRange;
             }
-            x += right - x < towerRange ? right - x : towerRange;
+            x += edges.right - x < towerRange ? edges.right - x : towerRange;
         }
     }
 
@@ -86,5 +106,19 @@ public class AOITowerStrategy implements AOIStrategy<BaseUnit> {
     @Override
     public void exit(BaseUnit unit, Vector2 pos) {
 
+    }
+
+    private static class Edges {
+        public final float left;
+        public final float right;
+        public final float top;
+        public final float bottom;
+
+        public Edges(float left, float right, float top, float bottom) {
+            this.left = left;
+            this.right = right;
+            this.top = top;
+            this.bottom = bottom;
+        }
     }
 }
