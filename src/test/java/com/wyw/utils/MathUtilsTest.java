@@ -8,9 +8,9 @@ class MathUtilsTest {
 
     @Test
     void cellDiv() {
-        assertEquals(MathUtils.cellDiv(4, 3), 2);
-        assertEquals(MathUtils.cellDiv(5, 3), 2);
-        assertEquals(MathUtils.cellDiv(6, 3), 2);
-        assertEquals(MathUtils.cellDiv(7, 3), 3);
+        assertEquals(MathUtils.ceilDiv(4, 3), 2);
+        assertEquals(MathUtils.ceilDiv(5, 3), 2);
+        assertEquals(MathUtils.ceilDiv(6, 3), 2);
+        assertEquals(MathUtils.ceilDiv(7, 3), 3);
     }
 }

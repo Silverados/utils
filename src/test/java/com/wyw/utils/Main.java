@@ -3,17 +3,28 @@ package com.wyw.utils;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
     @Test
-    void test() {
-        HashMap<String, String> map = null;
-        test(map);
-        System.out.println(map);
-    }
+    public void test() {
+        // 创建两个Set
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
 
-    private void test(HashMap<String, String> map) {
-        map = new HashMap<>();
-        map.put("a", "a");
+        // 向set1和set2添加相同的元素
+        set1.add(1);
+        set1.add(2);
+        set1.add(3);
+
+        set2.add(3);
+        set2.add(2);
+        set2.add(1);
+
+
+        System.out.println(set1.equals(set2));
+        System.out.println(set1 == set2);
     }
 }
