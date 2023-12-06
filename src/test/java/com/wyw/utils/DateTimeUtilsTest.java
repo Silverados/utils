@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -98,4 +99,40 @@ class DateTimeUtilsTest {
     void week() {
         System.out.println(DateTimeUtils.weekDisplayName(LocalDate.now()));
     }
+
+    @Test
+    void getMilliSecondInDuration() {
+        long currentTimeMillis = System.currentTimeMillis();
+//        long currentTimeMillis = 1699239241591L;
+        System.out.println(DateTimeUtils.getMilliSecondFixedHour(currentTimeMillis, Arrays.asList(3, 6, 10, 12, 17, 0)));
+    }
+
+    @Test
+    void testGetMilliSecondInDuration() {
+//        long currentTimeMillis = System.currentTimeMillis();
+//        long currentTimeMillis = 1699239241591L;
+
+        int[] duration = {9, 15, 18, 20, 22, 0};
+//        System.out.println(DateTimeUtils.getMilliSecondInDuration(currentTimeMillis, duration, 10000));
+
+        var m = 60 * 1000;
+        var hour = 60 * m;
+        int interval = 30 * m;
+        LocalDateTime now = LocalDateTime.now();
+        assertEquals(9 * hour, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(0).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(hour, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(8).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(interval, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(10).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(3 * hour, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(15).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(hour, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(17).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(2 * hour, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(20).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(interval, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(23).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(hour, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(21).withMinute(0).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(5 * m, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(8).withMinute(55).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(interval, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(14).withMinute(29).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(3 * hour + 1 * m, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(14).withMinute(59).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(1 * m, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(21).withMinute(59).withSecond(0).withNano(0)), duration, interval));
+        assertEquals(9 * hour + 1*m, DateTimeUtils.getMilliSecondInDuration(DateTimeUtils.toMilliTimestamp(now.withHour(23).withMinute(59).withSecond(0).withNano(0)), duration, interval));
+    }
+
+
 }
