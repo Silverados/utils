@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -76,18 +77,62 @@ class DateTimeUtilsTest {
     }
 
     @Test
-    void weekOfYear() {
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 1, 0, 0, 0)), 52);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 2, 0, 0, 0)), 52);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 3, 0, 0, 0)), 1);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 4, 0, 0, 0)), 1);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 5, 0, 0, 0)), 1);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 6, 0, 0, 0)), 1);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 7, 0, 0, 0)), 1);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 8, 0, 0, 0)), 1);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 9, 0, 0, 0)), 1);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 10, 0, 0, 0)), 2);
-        assertEquals(DateTimeUtils.weekOfYear(LocalDateTime.of(2022, 1, 11, 0, 0, 0)), 2);
+    void weekOfWeekBaseYear() {
+        assertEquals(52, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2021, 12, 31, 0, 0, 0)));
+        assertEquals(52, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 1, 0, 0, 0)));
+        assertEquals(52, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 2, 0, 0, 0)));
+        assertEquals(1, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 3, 0, 0, 0)));
+        assertEquals(1, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 4, 0, 0, 0)));
+        assertEquals(1, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 5, 0, 0, 0)));
+        assertEquals(1, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 6, 0, 0, 0)));
+        assertEquals(1, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 7, 0, 0, 0)));
+        assertEquals(1, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 8, 0, 0, 0)));
+        assertEquals(1, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 9, 0, 0, 0)));
+        assertEquals(2, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 10, 0, 0, 0)));
+        assertEquals(2, DateTimeUtils.weekOfWeekBaseYear(LocalDateTime.of(2022, 1, 11, 0, 0, 0)));
+
+        assertEquals(2021, DateTimeUtils.weekBasedYear(LocalDateTime.of(2021, 12, 31, 0, 0, 0)));
+        assertEquals(2021, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 1, 0, 0, 0)));
+        assertEquals(2021, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 2, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 3, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 4, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 5, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 6, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 7, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 8, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 9, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 10, 0, 0, 0)));
+        assertEquals(2022, DateTimeUtils.weekBasedYear(LocalDateTime.of(2022, 1, 11, 0, 0, 0)));
+    }
+
+    @Test
+    void isSameWeek() {
+        // 同一周的情况
+        assertTrue(DateTimeUtils.isSameWeek(toMillis("2024-01-15T00:00:00"), toMillis("2024-01-21T23:59:59"))); // 同一周的不同日期
+        assertTrue(DateTimeUtils.isSameWeek(toMillis("2024-01-15T00:00:00"), toMillis("2024-01-15T23:59:59"))); // 同一周的同一天
+
+        // 不同周的情况
+        assertFalse(DateTimeUtils.isSameWeek(toMillis("2024-01-15T00:00:00"), toMillis("2024-01-29T23:59:59"))); // 不同周的不同日期
+        assertFalse(DateTimeUtils.isSameWeek(toMillis("2024-01-15T00:00:00"), toMillis("2024-01-30T23:59:59"))); // 不同周的同一天
+
+        // 跨年的情况
+        assertFalse(DateTimeUtils.isSameWeek(toMillis("2023-12-31T00:00:00"), toMillis("2024-01-01T00:00:00"))); // 跨年的不同周
+        assertTrue(DateTimeUtils.isSameWeek(toMillis("2022-12-31T00:00:00"), toMillis("2023-01-01T23:59:59"))); // 跨年的同一周
+
+        // 不同年 非跨年的情况
+        assertFalse(DateTimeUtils.isSameWeek(toMillis("2024-01-15T00:00:00"), toMillis("2025-01-15T23:59:59")));
+
+        // 无效输入的情况
+        assertFalse(DateTimeUtils.isSameWeek(0L, toMillis("2024-01-22T23:59:59"))); // 无效的cmpTimeMillis
+        assertFalse(DateTimeUtils.isSameWeek(toMillis("2024-01-15T00:00:00"), 0L)); // 无效的nowTimeMillis
+        assertTrue(DateTimeUtils.isSameWeek(0L, 0L)); // 无效的cmpTimeMillis和nowTimeMillis
+    }
+
+    private static long toMillis(String dateTimeString) {
+        return LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_DATE_TIME)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
     }
 
     @Test

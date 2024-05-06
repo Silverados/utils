@@ -2,29 +2,31 @@ package com.wyw.utils;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
+    static List<Long> list = new ArrayList<>();
     @Test
     public void test() {
-        // 创建两个Set
-        Set<Integer> set1 = new HashSet<>();
-        Set<Integer> set2 = new HashSet<>();
+        list.add(1L);
+        list.add(2L);
+        list.add(3L);
 
-        // 向set1和set2添加相同的元素
-        set1.add(1);
-        set1.add(2);
-        set1.add(3);
+        for (Iterator<Long> iterator = list.iterator(); iterator.hasNext(); ) {
+            Long l = iterator.next();
+            if (l == 2) {
+                continue;
+            }
+            remove(l, iterator);
+        }
+    }
 
-        set2.add(3);
-        set2.add(2);
-        set2.add(1);
-
-
-        System.out.println(set1.equals(set2));
-        System.out.println(set1 == set2);
+    private void remove(Long l, Iterator<Long> iterator) {
+        if (iterator == null) {
+            list.remove(l);
+        } else {
+            iterator.remove();
+        }
     }
 }

@@ -148,11 +148,21 @@ public class DateTimeUtils {
      * @return
      */
     public static boolean isSameWeek(final LocalDateTime dateTime1, final LocalDateTime dateTime2) {
-        return weekOfYear(dateTime1) == weekOfYear(dateTime2);
+        return weekBasedYear(dateTime1) == weekBasedYear(dateTime2) && weekOfWeekBaseYear(dateTime1) == weekOfWeekBaseYear(dateTime2);
     }
 
-    public static int weekOfYear(LocalDateTime localDateTime) {
+    public static boolean isSameWeek(long cmpTimeMillis, long nowTimeMillis) {
+        LocalDateTime cmpLocalDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(cmpTimeMillis), ZoneId.systemDefault());
+        LocalDateTime nowLocalDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(nowTimeMillis), ZoneId.systemDefault());
+        return isSameWeek(cmpLocalDateTime, nowLocalDateTime);
+    }
+
+    public static int weekOfWeekBaseYear(LocalDateTime localDateTime) {
         return localDateTime.get(ISO_WEEK_FIELDS.weekOfWeekBasedYear());
+    }
+
+    public static int weekBasedYear(LocalDateTime localDateTime) {
+        return localDateTime.get(ISO_WEEK_FIELDS.weekBasedYear());
     }
 
     public static boolean isSameMonth(final LocalDateTime dateTime1, final LocalDateTime dateTime2) {
